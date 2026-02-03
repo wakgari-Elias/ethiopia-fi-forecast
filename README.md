@@ -188,5 +188,227 @@ The dataset (`ethiopia_fi_unified_data_enriched.xlsx`) contains:
 
 All analysis, visualizations, and tables are in:
 
+📘 Task 3: Event Impact Modeling
+Objective
 
+The objective of Task 3 is to model how major events—such as policy reforms, product launches, and infrastructure investments—affect key financial inclusion indicators in Ethiopia. This task translates qualitative event information and structured impact_link relationships into a quantitative framework that can explain historical changes and support forward-looking forecasting in subsequent tasks.
+
+This modeling step bridges exploratory analysis (Task 2) and forecasting (Task 4) by explicitly encoding how and when events influence Access and Usage outcomes.
+
+1. Understanding the Impact Data Structure
+Unified Event–Impact Schema
+
+The dataset follows a unified schema in which events, observations, targets, and modeled impact relationships coexist within a single structure.
+
+Key components used in this task:
+
+Events (record_type = event)
+Represent policies, product launches, infrastructure milestones, or market entries.
+
+Impact Links (record_type = impact_link)
+Represent modeled (not observed) causal relationships between events and indicators.
+
+Parent–Child Relationship
+Each impact_link.parent_id references the record_id of an event, allowing event metadata to be joined to modeled impacts.
+
+Impact links specify direction, magnitude, and lag, capturing how an event is expected to influence an indicator over time.
+
+📌 Insert here:
+
+A small table showing impact_links joined with events via parent_id → record_id
+
+2. Joining Events with Impact Links
+
+To analyze event effects, impact links were joined with their corresponding events using the parent–child relationship.
+
+This join enables analysis of:
+
+Which events affect which indicators
+
+The expected direction of impact (positive/negative)
+
+The magnitude and timing (lag in months)
+
+This step produces a consolidated event–indicator impact dataset, which forms the foundation of the modeling work.
+
+📌 Insert here:
+
+DataFrame head of the joined impact_events table
+
+3. Summary of Event–Indicator Relationships
+
+A structured summary was created to answer the question:
+
+Which events affect which indicators, and by how much?
+
+Each relationship includes:
+
+Event description (from original_text)
+
+Affected indicator (related_indicator)
+
+Impact direction
+
+Impact magnitude
+
+Lag (months)
+
+This summary confirms that the dataset captures both immediate effects (e.g., product launches) and delayed effects (e.g., regulatory reforms).
+
+📌 Insert here:
+
+Grouped summary table: event × indicator × magnitude × lag
+
+4. Modeling Event Effects Over Time
+Representation of Event Impacts
+
+Event impacts are modeled as time-shifted additive effects applied to indicator trends:
+
+Lagged activation: Effects begin after the specified lag period
+
+Gradual realization: Impacts accumulate over time rather than occurring instantaneously
+
+Directional influence: Positive or negative depending on event nature
+
+When multiple events affect the same indicator, their impacts are combined additively, acknowledging overlapping policy and market dynamics.
+
+Modeling Assumptions
+
+Impact magnitudes represent percentage-point changes unless otherwise stated
+
+Effects persist unless counteracted by opposing events
+
+No nonlinear saturation effects are modeled at this stage
+
+These assumptions are intentionally simple to preserve interpretability and transparency.
+
+5. Comparable Country Evidence
+
+For some events, Ethiopian pre/post data alone is insufficient to confidently estimate impacts. In such cases, comparable country evidence (e.g., Kenya, Ghana, Tanzania) is used to inform magnitude estimates.
+
+Examples include:
+
+Mobile money interoperability reforms
+
+Market entry of foreign telecom operators
+
+National digital ID or payments infrastructure investments
+
+Comparable evidence is used cautiously and explicitly documented to avoid overconfidence.
+
+📌 Insert here:
+
+Short table listing event → comparable country → observed impact
+
+6. Event–Indicator Association Matrix
+
+An Event–Indicator Association Matrix was constructed to formalize the modeled relationships.
+
+Matrix Structure
+
+Rows: Events (e.g., Telebirr launch, Safaricom entry)
+
+Columns: Key indicators (e.g., ACC_OWNERSHIP, USG_DIGITAL_PAYMENT)
+
+Values: Estimated impact magnitude (signed)
+
+This matrix provides a compact representation of which events affect which indicators and by how much, and serves as a direct input into forecasting models.
+
+📌 Insert here:
+
+Association matrix table or heatmap (non-uniform, centered at zero)
+
+7. Validation Against Historical Data
+Case Study: Telebirr Launch (May 2021)
+
+Observed mobile money account ownership increased from 4.7% (2021) to 9.45% (2024)
+
+The modeled impact of Telebirr predicts a sustained positive effect with a short lag
+
+Comparison of modeled vs observed trends shows:
+
+Directionally consistent results
+
+Reasonable magnitude alignment
+
+Remaining gaps likely due to:
+
+Rapid account registration vs slower active usage
+
+Infrastructure and digital literacy constraints
+
+This validation increases confidence in the modeled relationships while highlighting real-world complexities.
+
+📌 Insert here:
+
+Line plot: observed vs modeled mobile money adoption
+
+8. Refinement of Impact Estimates
+
+Based on validation results:
+
+Impact magnitudes were adjusted where model outputs diverged from observed trends
+
+Lag assumptions were refined for infrastructure-heavy events
+
+Confidence levels were assigned to each estimate
+
+Confidence Classification
+
+High: Strong data support and clear pre/post patterns
+
+Medium: Partial support or reliance on comparable country evidence
+
+Low: Sparse data or indirect inference
+
+📌 Insert here:
+
+Table showing event × indicator × confidence level
+
+9. Methodology Summary
+Modeling Approach
+
+Event-augmented additive impact model
+
+Lag-based activation of effects
+
+Matrix representation for transparency
+
+Key Assumptions
+
+Linear additive impacts
+
+Stable effects over forecast horizon
+
+No feedback loops modeled
+
+Limitations
+
+Sparse survey data points
+
+Modeled impacts rely partly on expert judgment
+
+Results should be interpreted as directional and scenario-based, not precise predictions
+
+10. Outputs and Deliverables
+
+The following deliverables were completed for Task 3:
+
+✅ Impact modeling notebook
+
+✅ Joined event–impact dataset
+
+✅ Event–indicator association matrix
+
+✅ Validation against historical outcomes
+
+✅ Documented assumptions, sources, and uncertainties
+
+These outputs provide the analytical foundation for forecasting (Task 4) and dashboard development (Task 5).
+
+Transition to Next Tasks
+
+Task 4 will use the event–indicator matrix to generate scenario-based forecasts for 2025–2027
+
+Task 5 will expose these modeled relationships and forecasts via an interactive dashboard for policymakers and consortium stakeholders
 
