@@ -412,3 +412,157 @@ Task 4 will use the event–indicator matrix to generate scenario-based forecast
 
 Task 5 will expose these modeled relationships and forecasts via an interactive dashboard for policymakers and consortium stakeholders
 
+Task 4: Forecasting Financial Inclusion in Ethiopia (2025–2027)
+Overview
+
+This task focuses on forecasting Account Ownership (Access) and Digital Payment Usage (Usage) in Ethiopia over the period 2025–2027. Using historical Findex data, enriched datasets, and modeled event impacts from Task 3, we generate baseline and scenario-based projections to inform policymakers and financial inclusion stakeholders about expected trends and key uncertainties.
+
+Objectives
+
+Predict financial inclusion indicators: Account Ownership and Digital Payment Usage.
+
+Incorporate event-driven effects: Policies, mobile money launches, and infrastructure investments from Task 3.
+
+Provide scenario-based projections: Base case, optimistic, and pessimistic outcomes.
+
+Quantify uncertainty: Confidence intervals and plausible forecast ranges.
+
+Support decision-making: Highlight which events could drive the largest improvements in Access and Usage.
+
+Methodology
+1. Data Preparation
+
+Source data: data/processed/ethiopia_fi_unified_data_enriched.xlsx
+
+Relevant indicators:
+
+ACC_OWNERSHIP: % of adults with a financial account
+
+USG_DIGITAL_PAYMENT: % of adults making or receiving digital payments
+
+Historical data extraction: Filter observations by indicator code and pillar.
+
+Time variable: Used year for trend modeling.
+
+2. Trend Regression
+
+A linear trend regression is fitted for each indicator using statsmodels OLS.
+
+Model formula:
+
+value_numeric ~ year + constant
+
+
+Forecast horizon: 2025–2027.
+
+3. Event-Augmented Forecasting
+
+Event impacts from Task 3 (Telebirr launch, M-Pesa entry, infrastructure investments) are incorporated to adjust baseline trends.
+
+Each event is applied according to its estimated effect size, direction, and lag.
+
+4. Scenario Analysis
+
+Three forecast scenarios are considered:
+
+Scenario	Description
+Base	Continuation of historical trend + expected event effects
+Optimistic	Accelerated adoption due to successful event impact implementation
+Pessimistic	Slower adoption due to regulatory, economic, or infrastructure constraints
+5. Confidence Intervals
+
+Calculated using the regression standard errors.
+
+Scenario ranges consider uncertainty in event effect sizes.
+
+Implementation
+
+Libraries used:
+
+pandas
+numpy
+matplotlib
+seaborn
+statsmodels
+
+
+Notebook location: src/forecasting/task4_forecast.ipynb
+
+Key steps in the notebook:
+
+Load historical and enriched datasets.
+
+Fit trend regression models for Access and Usage.
+
+Apply Task 3 event impacts.
+
+Generate baseline and scenario forecasts.
+
+Plot historical data, forecasts, and scenario ranges.
+
+Document results and interpretations.
+
+Results
+1. Account Ownership (Access)
+
+Baseline trend shows continued gradual increase from 2024 levels.
+
+Telebirr launch and financial policies have moderate positive effects.
+
+Scenario plots clearly illustrate base, optimistic, and pessimistic ranges.
+
+(Insert plot: Access Forecast 2025-2027.png here)
+
+2. Digital Payment Usage (Usage)
+
+Historical uptake shows slow but steady growth.
+
+Mobile money penetration and P2P/ATM crossover events amplify adoption in optimistic scenario.
+
+Forecast reflects potential gender and urban-rural disparities as noted in Task 2.
+
+(Insert plot: Digital Payment Usage Forecast 2025-2027.png here)
+
+3. Key Insights
+
+Telebirr and M-Pesa remain critical drivers of digital financial inclusion.
+
+Baseline trend predicts modest growth, highlighting the need for policy intervention.
+
+Optimistic scenario indicates accelerated adoption if infrastructure and outreach improve.
+
+Pessimistic scenario warns of plateauing growth without targeted policies.
+
+Confidence intervals indicate moderate uncertainty, especially for digital payment usage due to sparse historical observations.
+
+Limitations
+
+Sparse historical Findex data (5–6 points over 13 years) limits regression precision.
+
+Event impact estimates rely on assumptions and comparable-country evidence.
+
+Forecasts do not account for sudden macroeconomic shocks or policy reversals.
+
+Disaggregated insights (gender, region) are limited due to data availability.
+
+Next Steps
+
+Refine event effect estimates as new data becomes available (Task 3 update).
+
+Integrate additional leading indicators (infrastructure, mobile network coverage) for more granular forecasts.
+
+Prepare inputs for interactive dashboard (Task 5) with scenario selector and forecast visualization.
+
+Files & Deliverables
+File	Description
+src/forecasting/task4_forecast.ipynb	Forecast notebook with baseline and scenario analysis
+reports/figures/Access_Forecast_2025-2027.png	Access forecast visualization
+reports/figures/Digital_Payment_Forecast_2025-2027.png	Digital payment usage forecast visualization
+reports/Task4_README.md	This documentation
+References
+
+World Bank Global Findex Database (2011–2024)
+
+Task 3 Event Impact Modeling outputs
+
+Comparable country digital financial inclusion studies
